@@ -1,0 +1,46 @@
+<section ng-init="initiaze()">
+
+  <h1>Characters</h1>
+
+  <div class="filtering-container custom-select">
+    <button type="button" class="btn clear-btn" ng-click="select(1,'','','');" ng-if="selectedgender||selectedspecies||selectedstatus">CLEAR</button>
+    <select class="dropdown" ng-model="selectedgender" ng-selected="selectedgender" ng-options="gender for gender in genders" ng-change="select(1,selectedgender,selectedspecies,selectedstatus)">
+      <option value>Filter by gender</option>
+    </select>
+    <select class="dropdown" ng-model="selectedspecies" ng-selected="selectedspecies" ng-options="species for species in species" ng-change="select(1,selectedgender,selectedspecies,selectedstatus)">
+      <option value>Filter by species</option>
+    </select>
+    <select class="dropdown" ng-model="selectedstatus" ng-selected="selectedstatus" ng-options="status for status in status" ng-change="select(1,selectedgender,selectedspecies,selectedstatus)">
+      <option value>Filter by status</option>
+    </select>
+  </div>
+
+  <div class="table-container" ng-if="characters">
+    <table cellpadding="0" cellspacing="0" border="0">
+      <thead class="table-header">
+        <tr>
+          <th scope="col" ng-repeat="header in thead" ng-class="'table-th-{{header}}'" ng-if="header!=url" ng-show="$index<limit" ng-bind="header"></th>
+        </tr>
+      </thead>
+      <tbody class="table-content">
+        <tr ng-repeat="character in characters" ng-click="showCharacter(character)">
+          <td ng-repeat="prop in thead" ng-switch on="prop" ng-show="$index<limit">
+            <div ng-switch-when="image"> <img ng-src="{{character.image}}"/> </div>
+            <div ng-switch-when="location|origin" ng-switch-when-separator="|" ng-bind="character[prop].name"></div>
+            <div ng-switch-when="created" ng-bind="character.created | date:'h:mma dd/MM/yyyy'"></div>
+            <div ng-switch-default ng-bind="character[prop] || '-'"></div>
+          </td>
+      </tbody>
+    </table>
+  </div>
+  <div class="table-container" ng-if="nocharacters">
+    <p class="simple-text">No results found.</p>
+  </div>
+
+  <div class="paging-container">
+    <button type="button" class="btn" ng-click="page = page-1; select(page,selectedgender,selectedspecies,selectedstatus);" ng-disabled="page<2">PREVIOUS</button>
+    <div class="simple-text" ng-bind="'Page '+(page||1)+' / '+pages" ng-if="pages>1"></div>
+    <button type="button" class="btn" ng-click="page = page+1; select(page,selectedgender,selectedspecies,selectedstatus);" ng-disabled="page>=pages">NEXT</button>
+  </div>
+
+</section>
