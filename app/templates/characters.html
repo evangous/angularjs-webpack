@@ -1,4 +1,8 @@
-<section ng-init="initiaze()">
+<div class="loader-overlay" ng-hide="hideLoader">
+  <div class="spin-loader" class="shrink"></div>
+</div>
+
+<section ng-init="initiaze()" ng-show="hideLoader">
 
   <h1>Characters</h1>
 

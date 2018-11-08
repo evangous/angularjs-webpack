@@ -1,10 +1,16 @@
 <!DOCTYPE html>
 <html lang="en-US">
   <head>
-      <base href="http://127.0.0.1:9999/">
+      <base href="/">
+
+      <script>
+        console.log(window.location.protocol + '//' + window.location.host + '/app/');
+      </script>
+
       <meta charset="UTF-8" />
       <title>Peopleperhour Task</title>
       <link href="./css/style.css" rel="stylesheet">
+      <link href="./css/loader.css" rel="stylesheet">
       <link href="./css/ngDialog.css" rel="stylesheet">
   </head>
   <body ng-app="PeoplePerHour">

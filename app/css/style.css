@@ -168,14 +168,14 @@ td img {
   justify-content: space-between;
 }
 .character-prop {
-  padding: 10px;
+  padding: 2%;
   vertical-align: middle;
   text-transform: uppercase;
   width: 25%;
   font-size: 0.9rem;
 }
 .character-prop-value {
-  padding: 10px;
+  padding: 2%;
   vertical-align: middle;
   width: 75%;
   word-wrap: break-word;
@@ -189,5 +189,3 @@ td img {
   color: black;
   z-index: 100000;
 }
-
-/*https://codepen.io/nikhil8krishnan/pen/WvYPvv*/

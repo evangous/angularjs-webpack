@@ -2,6 +2,8 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
 
     $scope.initiaze = function(){
 
+      $scope.hideLoader = false;
+
       $scope.thead = ['id', 'image', 'name', 'status', 'species', 'type', 'gender', 'origin', 'location', 'created']; // , 'episode', 'url'
 
       $scope.genders = ['female', 'male', 'genderless', 'unknown'];
@@ -35,18 +37,26 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       getRequest.characters(page,gender,species,status)
       .then(
         function(response) {
+          console.log({response});
           $scope.characters = response.data.results;
           $scope.pages = response.data.info.pages;
           $scope.nocharacters = false;
+          $timeout(function(){
+            $scope.hideLoader = true;
+          })
           return true;
         },
         function(reason) {
+          console.log({reason});
           if(retriesCount++ < 2){
             // some error, try to recover once again
             return $scope.getCharacters($scope.page, $scope.selectedgender, $scope.selectedspecies, $scope.selectedstatus);
           } else {
             // finally reject
             $scope.nocharacters = true;
+            $timeout(function(){
+              $scope.hideLoader = true;
+            })
             return $q.reject(reason);
           }
         }
@@ -85,20 +95,18 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
     }
 
     function columnLimit(width) {
+      var limit = $scope.thead.length;
       if (width<520) {
-        limit = $scope.thead.length-5;
+        limit-=5;
       } else if (width<700) {
-        limit = $scope.thead.length-4;
+        limit-=4;
       } else if (width<780) {
-        limit = $scope.thead.length-3;
+        limit-=3;
       } else if (width<850) {
-        limit = $scope.thead.length-2;
+        limit-=2;
       }  else if (width<940) {
-        limit = $scope.thead.length-1;
-      } else {
-        limit = $scope.thead.length;
+        limit--;
       }
-      // console.log({width,limit});
       return limit;
     }
 
