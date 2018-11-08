@@ -1,5 +1,6 @@
 angular.module('PeoplePerHour').controller('CharactersController', function(getRequest, $scope, $location, $routeParams, ngDialog, $timeout, $q, $window) {
 
+    // initialize vairiables and data
     $scope.initiaze = function(){
 
       $scope.hideLoader = false;
@@ -24,6 +25,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
 
     }
 
+    // on window resize find appropriate columns length
     angular.element($window).bind('resize', function(){
       $scope.$apply(function() {
           $scope.width = $window.innerWidth;
@@ -32,6 +34,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       });
     });
 
+    // get characters data, retry if some error occured and stop loading
     var retriesCount = 0;
     $scope.getCharacters = function(page,gender,species,status){
       getRequest.characters(page,gender,species,status)
@@ -63,6 +66,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       )
     }
 
+    // routing function builds link base on config.js
     $scope.select = function(page,gender,species,status) {
       gender = (gender) ? '/gender/'+gender : '';
       species = (species) ? '/species/'+species : '';
@@ -71,6 +75,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       $location.path('/characters'+gender+species+status+page)
     }
 
+    // get character data and show modal
     $scope.showCharacter = function(character){
       $scope.singlecharacter = {};
       character.newepisode = [];
@@ -94,6 +99,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       })
     }
 
+    // reduce column limit given the window width
     function columnLimit(width) {
       var limit = $scope.thead.length;
       if (width<520) {
