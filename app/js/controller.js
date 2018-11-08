@@ -56,7 +56,6 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
             return $scope.getCharacters($scope.page, $scope.selectedgender, $scope.selectedspecies, $scope.selectedstatus);
           } else {
             // finally reject
-
             if (!$scope.selectedgender && !$scope.selectedspecies && !$scope.selectedstatus){
 
               $http.get("characters.json").then(function(response) {
@@ -67,20 +66,17 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
                   $timeout(function(){
                     $scope.hideLoader = true;
                   })
-                  return true;
               });
 
             } else {
 
               $scope.nocharacters = true;
+              $timeout(function(){
+                $scope.hideLoader = true;
+              })
+              return $q.reject(reason);
 
             }
-
-            $timeout(function(){
-              $scope.hideLoader = true;
-            })
-            return $q.reject(reason);
-
           }
         }
       )
