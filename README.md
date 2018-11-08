@@ -45,6 +45,51 @@ lilian_gousiou
 └── yarn.lock
 ```
 
+###HTML
+
+`index.html`
+Includes favicon, .css files and bundle.js.
+
+`/templates/characters.html`
+Displays characters listing page.
+
+`/templates/character.html`
+Includes character info modal content.
+
+`/templates/filtering.html`
+Displays listing page header with filtering.
+
+`/templates/paging.html`
+Displays listing page footer with paging.
+
+###CSS
+
+`/css/style.css`
+Includes all custom css for filtering, listing, paging, modal and loader.
+
+`/css/ngDialog.css`
+Includes angularJS ngDialog css.
+
+###JS
+
+`/index.js`
+Includes both required npm packages (angular, angular-route, ng-dialog) and custom JavaScipt files described below.
+
+`/js/config.js`
+AngularJS application module configuration, dependencies and routing.
+
+`/js/factories.js`
+Returns RESTfull API calls.
+
+`/js/controller.js`
+AngularJS controller includes listing and modal functionalities.
+
+###Webpack
+
+`/bundle.js`
+Webpack output that bundles all JavaScript files  depended on index.js.
+
+
 **Table of Contents**
 
 [TOC]
