@@ -1,4 +1,4 @@
-angular.module('PeoplePerHour').controller('CharactersController', function(getRequest, $scope, $location, $routeParams, ngDialog, $timeout, $q, $window) {
+angular.module('PeoplePerHour').controller('CharactersController', function(getRequest, $scope, $location, $routeParams, ngDialog, $timeout, $q, $window, $http) {
 
     // initialize vairiables and data
     $scope.initiaze = function(){
@@ -56,11 +56,31 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
             return $scope.getCharacters($scope.page, $scope.selectedgender, $scope.selectedspecies, $scope.selectedstatus);
           } else {
             // finally reject
-            $scope.nocharacters = true;
+
+            if (!$scope.selectedgender && !$scope.selectedspecies && !$scope.selectedstatus){
+
+              $http.get("characters.json").then(function(response) {
+                  console.log({response});
+                  $scope.characters = response.data.results;
+                  $scope.pages = response.data.info.pages;
+                  $scope.nocharacters = false;
+                  $timeout(function(){
+                    $scope.hideLoader = true;
+                  })
+                  return true;
+              });
+
+            } else {
+
+              $scope.nocharacters = true;
+
+            }
+
             $timeout(function(){
               $scope.hideLoader = true;
             })
             return $q.reject(reason);
+
           }
         }
       )
