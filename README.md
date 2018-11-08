@@ -88,8 +88,3 @@ AngularJS controller includes listing and modal functionalities.
 
 `/bundle.js`
 Webpack output that bundles all JavaScript files  depended on index.js.
-
-
-**Table of Contents**
-
-[TOC]
