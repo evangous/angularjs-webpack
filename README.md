@@ -1,6 +1,6 @@
-#AngularJS Project by Lilian Gousiou
+# AngularJS Project by Lilian Gousiou
 
-##Description
+## Description
 
 A single-page application using AngularJS. It displays information calling the Rick and Morty API and bundles all JavaScript files with Webpack.
 
