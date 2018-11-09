@@ -16,7 +16,7 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       $scope.selectedspecies = $routeParams.selectedspecies;
       $scope.selectedstatus = $routeParams.selectedstatus;
 
-      $scope.nocharacters = false;
+      $scope.error = false;
       $scope.singlecharacter = {};
 
       $scope.limit = columnLimit($window.innerWidth);
@@ -41,13 +41,21 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
       .then(
         function(response) {
           console.log({response});
-          $scope.characters = response.data.results;
-          $scope.pages = response.data.info.pages;
-          $scope.nocharacters = false;
-          $timeout(function(){
-            $scope.hideLoader = true;
-          })
-          return true;
+          if (response.error){
+            $scope.error = response.error;
+            $timeout(function(){
+              $scope.hideLoader = true;
+            })
+            return false;
+          } else {
+            $scope.characters = response.data.results;
+            $scope.pages = response.data.info.pages;
+            $scope.error = false;
+            $timeout(function(){
+              $scope.hideLoader = true;
+            })
+            return true;
+          }
         },
         function(reason) {
           console.log({reason});
@@ -56,27 +64,11 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
             return $scope.getCharacters($scope.page, $scope.selectedgender, $scope.selectedspecies, $scope.selectedstatus);
           } else {
             // finally reject
-            if (!$scope.selectedgender && !$scope.selectedspecies && !$scope.selectedstatus){
-
-              $http.get("characters.json").then(function(response) {
-                  console.log({response});
-                  $scope.characters = response.data.results;
-                  $scope.pages = response.data.info.pages;
-                  $scope.nocharacters = false;
-                  $timeout(function(){
-                    $scope.hideLoader = true;
-                  })
-              });
-
-            } else {
-
-              $scope.nocharacters = true;
-              $timeout(function(){
-                $scope.hideLoader = true;
-              })
-              return $q.reject(reason);
-
-            }
+            $scope.error = 'Some error occured.';
+            $timeout(function(){
+              $scope.hideLoader = true;
+            })
+            return $q.reject(reason);
           }
         }
       )
@@ -95,17 +87,22 @@ angular.module('PeoplePerHour').controller('CharactersController', function(getR
     $scope.showCharacter = function(character){
       $scope.singlecharacter = {};
       character.newepisode = [];
+      var numbers = []
       angular.forEach(character.episode, function(url,index){
-        getRequest.episode(url).then( function(response){
-          // check success-status of returned data
-          if(response.status==200){
-            character.newepisode[index] = response.data;
-            return true;
-          } else {
-            // reject with error
-            return $q.reject('some error occured');
-          }
-        })
+        numbers.push(url.match(/\d+/g).map(Number));
+        console.log({numbers});
+      })
+      console.log(numbers.join(','));
+      getRequest.episode(numbers).then( function(response){
+        console.log({response});
+        // check success-status of returned data
+        if(response.status==200){
+          character.newepisode = response.data;
+          return true;
+        } else {
+          // reject with error
+          return $q.reject('some error occured');
+        }
       })
       $scope.singlecharacter = character;
       ngDialog.open({

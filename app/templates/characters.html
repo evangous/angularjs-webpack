@@ -36,8 +36,8 @@
   <!-- characters listing -->
 
   <!-- no results container -->
-  <div class="table-container" ng-if="nocharacters">
-    <p class="simple-text">No results found.</p>
+  <div class="table-container" ng-if="error">
+    <p class="simple-text" ng-bind="error"></p>
   </div>
   <!-- end of no results container -->
 

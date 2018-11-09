@@ -5,9 +5,10 @@
   "main": "app/index.js",
   "repository": "https://github.com/evangous/angularjs-webpack.git",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "browse": "angular-http-server --config angular-http-server.config.js",
     "start": "node node_modules/.bin/webpack-dev-server --content-base app",
-    "build": "NODE_ENV=production node node_modules/.bin/webpack && cp app/index.html"
+    "dev": "webpack --mode development",
+    "build": "NODE_ENV=development node node_modules/.bin/webpack && cp app/index.html"
   },
   "keywords": [
     "webpack",
