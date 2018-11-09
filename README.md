@@ -48,7 +48,7 @@ lilian_gousiou
 ### HTML
 
 `index.html`
-Includes favicon, .css files and bundle.js.
+Includes favicon, .css files and bundle.js. It also includes the rendered template of the each route into the main layout.
 
 `/templates/characters.html`
 Displays characters listing page.
